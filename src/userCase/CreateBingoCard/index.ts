@@ -1,5 +1,5 @@
-import { CreateBingoCardController } from './CreateBingoCardController'
 import { CreateBingoCardUseCase } from './CreateBingoCardUseCase'
+import { CreateBingoCardController } from './CreateBingoCardController'
 import { CreateBingoCardRepository } from '../../repositories/implementations/CreateBingoCardRepository'
 
 const createBingoCardRepository = new CreateBingoCardRepository()
