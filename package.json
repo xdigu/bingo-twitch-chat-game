@@ -4,8 +4,8 @@
   "description": "Twitch bingo game",
   "main": "src/app.ts",
   "scripts": {
-    "start": "ts-node index.ts",
-    "dev": "ts-node-dev --respawn --transpile-only  index.ts",
+    "start": "ts-node src/app.ts",
+    "dev": "tsnd --respawn --transpile-only  src/app.ts",
     "lint:show": "eslint '*/**/*.{js,ts}' --fix",
     "lint": "eslint '*/**/*.{js,ts}' --quiet --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
