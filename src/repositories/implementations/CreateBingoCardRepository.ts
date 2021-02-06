@@ -1,7 +1,7 @@
-import { ICardRepository } from '../ICardRepository'
+import { ICreateBingoCardRepository } from '../ICreateBingoCardRepository'
 import type { Card } from '../../entities/Card'
 
-export class BingoCard implements ICardRepository {
+export class CreateBingoCardRepository implements ICreateBingoCardRepository {
   private cards: Card[] = []
 
   async create(data: Card): Promise<void> {
