@@ -1,9 +1,9 @@
 export class Card {
-  public columnB: number[]
-  public columnI: number[]
-  public columnN: number[]
-  public columnG: number[]
-  public columnO: number[]
+  columnB: number[]
+  columnI: number[]
+  columnN: number[]
+  columnG: number[]
+  columnO: number[]
 
   private avaliableCardNumbers: Omit<Card, 'avaliableCardNumbers' | 'createDefaultCardColumn' | 'createCardColumn'>
 
