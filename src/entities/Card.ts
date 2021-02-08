@@ -5,10 +5,10 @@ export class Card {
   columnG: number[]
   columnO: number[]
 
-  private avaliableCardNumbers: Omit<Card, 'avaliableCardNumbers' | 'createDefaultCardColumn' | 'createCardColumn'>
+  #avaliableCardNumbers: Omit<Card, 'avaliableCardNumbers' | 'createDefaultCardColumn' | 'createCardColumn'>
 
   constructor() {
-    this.avaliableCardNumbers = {
+    this.#avaliableCardNumbers = {
       columnB: this.createDefaultCardColumn(1),
       columnI: this.createDefaultCardColumn(2),
       columnN: this.createDefaultCardColumn(3),
@@ -16,21 +16,23 @@ export class Card {
       columnO: this.createDefaultCardColumn(5),
     }
 
-    this.columnB = this.createCardColumn(this.avaliableCardNumbers.columnB)
-    this.columnI = this.createCardColumn(this.avaliableCardNumbers.columnI)
-    this.columnN = this.createCardColumn(this.avaliableCardNumbers.columnN)
-    this.columnG = this.createCardColumn(this.avaliableCardNumbers.columnG)
-    this.columnO = this.createCardColumn(this.avaliableCardNumbers.columnO)
+    this.columnB = this.createCardColumn(this.#avaliableCardNumbers.columnB)
+    this.columnI = this.createCardColumn(this.#avaliableCardNumbers.columnI)
+    this.columnN = this.createCardColumn(this.#avaliableCardNumbers.columnN)
+    this.columnG = this.createCardColumn(this.#avaliableCardNumbers.columnG)
+    this.columnO = this.createCardColumn(this.#avaliableCardNumbers.columnO)
   }
 
-  private createDefaultCardColumn(columnNumber = 1): number[] {
+  private createDefaultCardColumn(columnNumber: number, totalBingoStone = 90): number[] {
     if (columnNumber < 1 || columnNumber > 5) {
       throw new Error('The column numer must be betwen 1 and 5')
     }
 
-    const columnOffSet = columnNumber * 15 - 14
+    const bingoStonePerColumn = totalBingoStone / 5
 
-    return [...new Array(15).fill(null).map((_, idx) => idx + columnOffSet)]
+    const columnOffSet = columnNumber * bingoStonePerColumn - (bingoStonePerColumn - 1)
+
+    return [...new Array(bingoStonePerColumn).fill(null).map((_, idx) => idx + columnOffSet)]
   }
 
   private createCardColumn(avaliableNumbers: number[], cardColumnOffSet = 5): number[] {
