@@ -1,7 +1,7 @@
 import { Game } from '../../entities/Game'
 import { ICreateBingoGameRepository } from '../ICreateBingoGameRepository'
 
-export class CreateBingoGameRepository implements ICreateBingoGameRepository {
+class CreateBingoGameRepository implements ICreateBingoGameRepository {
   #games: Game[] = []
 
   async streamerHasValidGame(streamerName: string): Promise<boolean> {
@@ -22,3 +22,5 @@ export class CreateBingoGameRepository implements ICreateBingoGameRepository {
     return game
   }
 }
+
+export const createBingoGameRepository = new CreateBingoGameRepository()

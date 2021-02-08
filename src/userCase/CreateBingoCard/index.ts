@@ -1,10 +1,7 @@
 import { CreateBingoCardUseCase } from './CreateBingoCardUseCase'
 import { CreateBingoCardController } from './CreateBingoCardController'
-import { CreateBingoCardRepository } from '../../repositories/implementations/CreateBingoCardRepository'
-import { CreateBingoGameRepository } from '../../repositories/implementations/CreateBingoGameRepository'
-
-const createBingoCardRepository = new CreateBingoCardRepository()
-const createBingoGameRepository = new CreateBingoGameRepository()
+import { createBingoCardRepository } from '../../repositories/implementations/CreateBingoCardRepository'
+import { createBingoGameRepository } from '../../repositories/implementations/CreateBingoGameRepository'
 
 const createBingoCardUseCase = new CreateBingoCardUseCase(createBingoCardRepository, createBingoGameRepository)
 const createBingoCardController = new CreateBingoCardController(createBingoCardUseCase)

@@ -8,7 +8,7 @@ interface Cards {
   card: Card
 }
 
-export class CreateBingoCardRepository implements ICreateBingoCardRepository {
+class CreateBingoCardRepository implements ICreateBingoCardRepository {
   #cards: Cards[] = []
 
   async chatUserHasCard(streamerName: string, userChatName: string): Promise<boolean> {
@@ -21,3 +21,5 @@ export class CreateBingoCardRepository implements ICreateBingoCardRepository {
     this.#cards.push({ streamerName, userName, card })
   }
 }
+
+export const createBingoCardRepository = new CreateBingoCardRepository()
