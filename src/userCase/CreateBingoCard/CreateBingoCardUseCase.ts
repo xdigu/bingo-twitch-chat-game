@@ -1,9 +1,13 @@
 import { ICreateBingoCardRepository } from '../../repositories/ICreateBingoCardRepository'
 import { ICreateBingoCardRequestDTO } from './CreateBingoCardDTO'
 import { Card } from '../../entities/Card'
+import { ICreateBingoGameRepository } from '../../repositories/ICreateBingoGameRepository'
 
 export class CreateBingoCardUseCase {
-  constructor(private createBingoCardRepository: ICreateBingoCardRepository) {}
+  constructor(
+    private createBingoCardRepository: ICreateBingoCardRepository,
+    private createBingoGameRepository: ICreateBingoGameRepository,
+  ) {}
 
   async create(
     data: ICreateBingoCardRequestDTO,
@@ -12,7 +16,7 @@ export class CreateBingoCardUseCase {
 
     const card = new Card()
 
-    const hasGame = await this.createBingoCardRepository.streamerHasValidGame(streamerName)
+    const hasGame = await this.createBingoGameRepository.streamerHasValidGame(streamerName)
 
     if (!hasGame) {
       throw new Error('Streamer has no game initiated')
