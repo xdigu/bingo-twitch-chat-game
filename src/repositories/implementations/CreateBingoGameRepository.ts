@@ -1,26 +1,24 @@
+import { Model } from 'mongoose'
 import { Game } from '../../entities/Game'
+import { IGameEntity } from '../../model/game.model'
 import { ICreateBingoGameRepository } from '../ICreateBingoGameRepository'
 
-class CreateBingoGameRepository implements ICreateBingoGameRepository {
+export class CreateBingoGameRepository implements ICreateBingoGameRepository {
   #games: Game[] = []
 
-  async streamerHasValidGame(streamerName: string): Promise<boolean> {
-    const game = this.#games.find(
-      (game) => game.streamerName === streamerName && game.started === false && game.ended === false,
-    )
+  constructor(private gameDataBase: Model<IGameEntity>) {}
 
-    console.log(this.#games)
-
-    return !!game
-  }
-
-  async createGame(streamerName: string): Promise<Game> {
-    const game = new Game(streamerName)
-
-    this.#games.push(game)
+  async streamerHasValidGame(streamerName: string): Promise<IGameEntity | null> {
+    const game = await this.gameDataBase.findOne({ streamerName, started: false, ended: false })
 
     return game
   }
-}
 
-export const createBingoGameRepository = new CreateBingoGameRepository()
+  async createGame(streamerName: string): Promise<IGameEntity | null> {
+    const game = new Game(streamerName)
+
+    const _game = this.gameDataBase.create(game)
+
+    return _game
+  }
+}

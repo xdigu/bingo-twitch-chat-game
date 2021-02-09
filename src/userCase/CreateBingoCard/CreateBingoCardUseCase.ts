@@ -14,19 +14,19 @@ export class CreateBingoCardUseCase {
   ): Promise<Omit<Card, 'avaliableCardNumbers' | 'createDefaultCardColumn' | 'createCardColumn'>> {
     const { streamerName, userName } = data
 
-    const card = new Card()
+    const game = await this.createBingoGameRepository.streamerHasValidGame(streamerName)
 
-    const hasGame = await this.createBingoGameRepository.streamerHasValidGame(streamerName)
-
-    if (!hasGame) {
+    if (!game) {
       throw new Error('Streamer has no game initiated')
     }
 
-    const userHasCard = await this.createBingoCardRepository.chatUserHasCard(streamerName, userName)
+    const userHasCard = await this.createBingoCardRepository.chatUserHasCard(game._id, userName)
 
     if (userHasCard) {
       throw new Error('User already have a card')
     }
+
+    const card = new Card(userName, game._id)
 
     await this.createBingoCardRepository.create(streamerName, userName, card)
 

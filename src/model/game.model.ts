@@ -1,0 +1,23 @@
+import mongoose, { Schema, Document } from 'mongoose'
+import { ICardEntity } from './card.model'
+import { BallSchema, IBallEntity } from './ball.model'
+
+export interface IGameEntity extends Document {
+  streamerName: string
+  started: boolean
+  ended: boolean
+  cards: ICardEntity['_id'][]
+  balls: Omit<IBallEntity, keyof Document>[]
+}
+
+export const GameSchema = new Schema<IGameEntity>({
+  streamerName: String,
+  started: Boolean,
+  ended: Boolean,
+  cards: [{ type: Schema.Types.ObjectId }],
+  balls: [BallSchema],
+})
+
+const GameModel = mongoose.model<IGameEntity>('Game', GameSchema)
+
+export default GameModel
