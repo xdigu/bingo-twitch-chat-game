@@ -10,7 +10,7 @@ export class Game implements Omit<IGameEntity, keyof Document> {
   cards: Card[]
   balls: Ball[]
 
-  constructor(public readonly streamerName: string) {
+  constructor(readonly streamerName: string) {
     this.started = false
     this.ended = false
     this.cards = []

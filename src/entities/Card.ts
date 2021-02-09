@@ -8,7 +8,7 @@ export class Card implements Omit<ICardEntity, keyof Document> {
 
   #avaliableCardNumbers: { [key: string]: number[] }
 
-  constructor(public readonly userChatName: string, public gameId: IGameEntity['_id']) {
+  constructor(readonly userChatName: string, public gameId: IGameEntity['_id']) {
     this.#avaliableCardNumbers = {
       columnB: this.createDefaultCardColumn(1),
       columnI: this.createDefaultCardColumn(2),

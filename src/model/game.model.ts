@@ -6,8 +6,8 @@ export interface IGameEntity extends Document {
   streamerName: string
   started: boolean
   ended: boolean
-  cards: ICardEntity['_id'][]
-  balls: Omit<IBallEntity, keyof Document>[]
+  cards: Array<ICardEntity['_id']>
+  balls: Array<Omit<IBallEntity, keyof Document>>
 }
 
 export const GameSchema = new Schema<IGameEntity>({
