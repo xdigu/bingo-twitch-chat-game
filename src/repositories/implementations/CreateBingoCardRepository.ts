@@ -1,6 +1,8 @@
 import { ICreateBingoCardRepository } from '../ICreateBingoCardRepository'
 
 import type { Card } from '../../entities/Card'
+import { ICardEntity } from '../../model/card.model'
+import { Model } from 'mongoose'
 
 interface Cards {
   streamerName: string
@@ -8,18 +10,19 @@ interface Cards {
   card: Card
 }
 
-class CreateBingoCardRepository implements ICreateBingoCardRepository {
+export class CreateBingoCardRepository implements ICreateBingoCardRepository {
+  constructor(private cardDataBase: Model<ICardEntity>) {}
   #cards: Cards[] = []
 
-  async chatUserHasCard(streamerName: string, userChatName: string): Promise<boolean> {
-    const validCard = this.#cards.find((card) => card.streamerName === streamerName && card.userName === userChatName)
+  async chatUserHasCard(gameId: string, userChatName: string): Promise<ICardEntity | null> {
+    const validCard = await this.cardDataBase.findOne({ userChatName, gameId })
 
-    return !!validCard
+    return validCard
   }
 
-  async create(streamerName: string, userName: string, card: Card): Promise<void> {
-    this.#cards.push({ streamerName, userName, card })
+  async create(streamerName: string, userName: string, card: Card): Promise<ICardEntity | null> {
+    const _card = await this.cardDataBase.create(card)
+
+    return _card
   }
 }
-
-export const createBingoCardRepository = new CreateBingoCardRepository()

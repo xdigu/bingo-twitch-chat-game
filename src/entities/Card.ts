@@ -1,13 +1,14 @@
-export class Card {
-  columnB: number[]
-  columnI: number[]
-  columnN: number[]
-  columnG: number[]
-  columnO: number[]
+import { Document } from 'mongoose'
 
-  #avaliableCardNumbers: Omit<Card, 'avaliableCardNumbers' | 'createDefaultCardColumn' | 'createCardColumn'>
+import { ICardEntity } from '../model/card.model'
+import { IGameEntity } from '../model/game.model'
 
-  constructor() {
+export class Card implements Omit<ICardEntity, keyof Document> {
+  cardNumbers: number[]
+
+  #avaliableCardNumbers: { [key: string]: number[] }
+
+  constructor(readonly userChatName: string, public gameId: IGameEntity['_id']) {
     this.#avaliableCardNumbers = {
       columnB: this.createDefaultCardColumn(1),
       columnI: this.createDefaultCardColumn(2),
@@ -16,11 +17,13 @@ export class Card {
       columnO: this.createDefaultCardColumn(5),
     }
 
-    this.columnB = this.createCardColumn(this.#avaliableCardNumbers.columnB)
-    this.columnI = this.createCardColumn(this.#avaliableCardNumbers.columnI)
-    this.columnN = this.createCardColumn(this.#avaliableCardNumbers.columnN)
-    this.columnG = this.createCardColumn(this.#avaliableCardNumbers.columnG)
-    this.columnO = this.createCardColumn(this.#avaliableCardNumbers.columnO)
+    this.cardNumbers = [
+      ...this.createCardColumn(this.#avaliableCardNumbers.columnB),
+      ...this.createCardColumn(this.#avaliableCardNumbers.columnI),
+      ...this.createCardColumn(this.#avaliableCardNumbers.columnN),
+      ...this.createCardColumn(this.#avaliableCardNumbers.columnG),
+      ...this.createCardColumn(this.#avaliableCardNumbers.columnO),
+    ]
   }
 
   private createDefaultCardColumn(columnNumber: number, totalBingoStone = 90): number[] {

@@ -1,6 +1,6 @@
-import { Game } from '../entities/Game'
+import { IGameEntity } from '../model/game.model'
 
 export interface ICreateBingoGameRepository {
-  streamerHasValidGame: (streamerName: string) => Promise<boolean>
-  createGame: (streamerName: string) => Promise<Game>
+  streamerHasValidGame: (streamerName: string) => Promise<IGameEntity | null>
+  createGame: (streamerName: string) => Promise<IGameEntity | null>
 }
