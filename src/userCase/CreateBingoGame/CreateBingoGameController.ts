@@ -6,10 +6,10 @@ export class CreateBingoGameController {
   constructor(private createBingoGameUseCase: CreateBingoGameUseCase) {}
 
   async handle(request: Request, response: Response): Promise<Response> {
-    const { streamerName }: ICreateBingoGameRequestDTO = request.body
+    const { streamerName, amountOfCards }: ICreateBingoGameRequestDTO = request.body
 
     try {
-      const game = await this.createBingoGameUseCase.create(streamerName)
+      const game = await this.createBingoGameUseCase.create(streamerName, amountOfCards)
 
       return response.status(201).json(game)
     } catch (error) {
